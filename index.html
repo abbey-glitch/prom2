@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="prom.css">
+    <title>promise2</title>
+    <link rel="shortcut icon" href="cofy.webp" type="image/webp">
+</head>
+<body>
+    <div id="wrapper">
+        <nav>
+            <figure>
+                <img src="cofy.webp" alt="logo" width="100">
+                <figcaption>Nature First Product</figcaption>
+            </figure>
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="">Service</a></li>
+            </ul>
+            <form action="" method="get">
+                <input type="search" placeholder="product search" name="" id="">
+                <button type="button"><i class="fab fa-searchengin fa-3x"></i></button>
+            </form>
+            <div id="cart">
+                <i class="fas fa-cart-arrow-down fa-3x"></i>
+                <span id="badge">0</span>
+            </div>
+        </nav>
+        <div id="section">
+
+        </div>
+        <div id="tray">
+            
+        </div>
+        <footer>
+            <div id="base">
+                <form action="" method="post">
+                    <input type="text" placeholder="enter a feedback" name="" id="">
+                    <button type='button' onclick="close_cart()">feeds</button>
+                </form>
+                <div class="quickLinks">
+                    <ol>
+                        <li><a href="">Home</a></li>
+                        <li><a href="">About</a></li>
+                        <li><a href="">Service</a></li>
+                    </ol>
+                </div>
+                <figure>
+                    <img src="cofy.webp" alt="logo" width="100">
+                    <figcaption>Nature First Product</figcaption>
+                </figure>
+            </div>
+            <div id="socials">
+                <a href="https://www.facebook.com/abiodun.onaolapo.712"><i class="fab fa-facebook-messenger fa-4x"></i></a>
+                <a href="https://whatsapp.com/dl/"><i class="fab fa-whatsapp fa-4x"></i></a>
+                <a href=" https://instagram.com/saydotech?igshid=NTc4MTIwNjQ2YQ=="><i class="fab fa-instagram fa-4x"></i></a>
+                <a href="https://www.linkedin.com/in/abiodun-onaolapo-00437325a"><i class="fab fa-linkedin fa-4x"></i></a>
+            </div>
+            <div id="top">
+                <i class="fas fa-arrow-up fa-4x"></i>
+            </div>
+        </footer>
+    </div>
+    <script src="https://kit.fontawesome.com/9547bec493.js" crossorigin="anonymous"></script>
+    <script>
+        // show number of cart item
+        window.onload = function(cart_store){
+            cart_store = JSON.parse(localStorage.getItem('cart'))
+            let badge = document.getElementById('badge');
+            badge.innerText = cart_store.length
+            console.log(cart_store.length)
+            return cart_store
+        }
+        // call the api and get the product data
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://api.escuelajs.co/api/v1/products");
+        let div = document.getElementById('section') 
+        let content = document.createElement('div');
+        content.setAttribute('id', 'pro_tray')
+        xhr.onload = function(){
+            if(xhr.status===200){
+                alert('Done')
+            }
+            // let section = document.createElement('img')
+            let dataset = JSON.parse(xhr.responseText)
+            for(let i=0; i<dataset.length; i++){
+                //console.log(dataset[i])
+                content.innerHTML += `<div class='products'>
+                              <div class='product_overlay' id=${dataset[i]['id']}>
+                                  <figure>
+                                      <img src=${dataset[i]['images']} width='100%'>
+                                      <figcaption>${dataset[i]['title']}</figcaption>
+                                  </figure>
+                                  <h3>Price: #${dataset[i]['price']}</h3>
+                                  <p class='description'>
+                                    <mark>Description:</mark> ${dataset[i]['description']}</p>
+                                  <div id='controls'>
+                                     <button type='button' style='background-color:green; color:white;' onclick='stored(${dataset[i]['id']})'><i class='fas fa-cart-plus'></i>Add</button>
+                                  </div>
+                                </div>
+                            </div>`
+            } 
+            div.appendChild(content)
+            // console.log(div)  
+        }
+        xhr.send();
+        // function for getting product
+        async function stored(item){
+            await fetch(`https://api.escuelajs.co/api/v1/products/${item}`).then(pro_img=>pro_img.json()).then(
+                pro_img =>{
+                    let cart_store = JSON.parse(localStorage.getItem('cart'));
+                    let cartTray = document.createElement('div')
+                    cartTray.setAttribute('id', 'set')
+                    let tray = []
+                    let protem =    {
+                            "image": pro_img['images'],
+                            "title": pro_img['title'],
+                            "price": pro_img['price']
+                        }
+                    if (cart_store == null || cart_store == undefined){
+                        tray.push(protem)
+                        cart_store = localStorage.setItem('cart', JSON.stringify(tray));
+                        alert('one item added')
+                        location.reload();
+                    }
+                    if(cart_store.length > 0){
+                        cart_store.push(protem);
+                        localStorage.setItem('cart', JSON.stringify(cart_store))
+                        alert('other item added')
+                        location.reload();
+                    }
+                }
+            )
+        }
+    </script>
+</body>
+</html>
