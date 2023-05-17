@@ -25,16 +25,18 @@
                 <input type="search" placeholder="product search" name="" id="">
                 <button type="button"><i class="fab fa-searchengin fa-3x"></i></button>
             </form>
-            <div id="cart">
-                <i class="fas fa-cart-arrow-down fa-3x"></i>
-                <span id="badge">0</span>
+            <div id="touph">
+                <div id="cart">
+                    <i class="fas fa-cart-arrow-down fa-3x"></i>
+                    <span id="badge">0</span>
+                </div>
+                <div id="tray">
+                    
+                </div>
             </div>
         </nav>
         <div id="section">
 
-        </div>
-        <div id="tray">
-            
         </div>
         <footer>
             <div id="base">
@@ -67,13 +69,50 @@
     </div>
     <script src="https://kit.fontawesome.com/9547bec493.js" crossorigin="anonymous"></script>
     <script>
+        // function to display cart product
+        let display = document.getElementById('cart')
+        let cart_tray = document.getElementById('tray')
+        display.addEventListener('click', function(){
+            cart_tray.style.display = 'block'
+            let closer = document.querySelector('.close');
+            closer.addEventListener('click', function(){
+                cart_tray.style.display = 'none'
+            })
+        })
+        //console.log(display)
         // show number of cart item
         window.onload = function(cart_store){
             cart_store = JSON.parse(localStorage.getItem('cart'))
             let badge = document.getElementById('badge');
             badge.innerText = cart_store.length
+            let cart_item = document.createElement('div');
+            cart_item.innerHTML = `<i class="fa fa-window-close fa-2x close" aria-hidden="true"></i>
+                                   <h3>PRODUCTS</h3>
+                                   <div class="head">
+                                        <div class="serial">
+                                            <h3>ITEMS</h3>
+                                            <h3>PRICE</h3>
+                                            <h3>SN</h3>
+                                        </div>`
+            for(let i=0; i<cart_store.length; i++){
+                cart_item.innerHTML += `<div id="imag">
+                                            <figure>
+                                                <img src='${cart_store[i]['image']}' width='30%'>
+                                                <figcaption>${cart_store[i]['title']}</figcaption>
+                                            </figure>
+                                            <div id="price">
+                                                <h3>PRICE:${cart_store[i]['price']}</h3>
+                                            </div>
+                                            <div id="incred">
+                                                 <i class="fas fa-angle-up"></i>
+                                                 <i class="fas fa-angle-down"></i>
+                                            </div>
+                                       </div>
+                                   </div>`
+                console.log(cart_store[i])
+            }
+            cart_tray.appendChild(cart_item)
             console.log(cart_store.length)
-            return cart_store
         }
         // call the api and get the product data
         const xhr = new XMLHttpRequest();

@@ -63,17 +63,18 @@ nav{
     z-index: 10;
     mix-blend-mode: normal;
 }
-nav>ul{
+nav>ul, .serial, #imag{
     display: grid;
     grid-template-areas: 'second . .';
     justify-items: center;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
 }
 nav>ul>li>a, .quickLinks>ol>li>a{
     text-decoration: none;
 }
-nav>form, #cart, #base>form{
+nav>form, #cart, #base>form, .touph{
     position: relative;
 }
 #cart>#badge{
@@ -116,7 +117,7 @@ input[type=search], #base>form>input[type=text]{
     color: antiquewhite;
 }
 /* spacing the product_overlay */
-.product_overlay{
+.product_overlay, #incred{
     display: flex;
     flex-direction: column;
     row-gap: .5rem;
@@ -185,12 +186,12 @@ input[type=search], #base>form>input[type=text]{
 #tray{
     background-color: grey;
     position: absolute;
-    top: 6.5rem;
+    top: 6rem;
     padding: 2rem;
     right: 0;
     left:auto;
     z-index: 10;
-    width:25%;
-    display: none;
+    width:20%;
+    display: none;  
     color: aliceblue;
 }
