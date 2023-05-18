@@ -49,6 +49,9 @@ table {
     font-weight: 400;
     position: relative;
 }
+/* ::-webkit-scrollbar{
+
+} */
 nav{
     background-color: burlywood;
     display: grid;
@@ -70,6 +73,9 @@ nav>ul, .serial, #imag{
     justify-content: space-around;
     align-items: center;
     width: 100%;
+}
+#imag{
+    border: .1rem solid coral;
 }
 nav>ul>li>a, .quickLinks>ol>li>a{
     text-decoration: none;
@@ -190,8 +196,16 @@ input[type=search], #base>form>input[type=text]{
     padding: 2rem;
     right: 0;
     left:auto;
-    z-index: 10;
+    z-index: 9;
     width:20%;
     display: none;  
     color: aliceblue;
+}
+#trayHead{
+    border:.1rem solid pink;
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 8rem;
 }
