@@ -1,5 +1,5 @@
 #!/bin/bash
-
+$DOMAIN_NAME = "testblog.testdomain.com"
 # Example usage of the DOMAIN_NAME variable
 if [ -z "$DOMAIN_NAME" ]; then
   echo "DOMAIN_NAME is not set!"
