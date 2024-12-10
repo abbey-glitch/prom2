@@ -1,5 +1,5 @@
 #!/bin/bash
-
+$DOMAIN_NAME = "testblog.testdomain.com"
 CERTBOT_PATH=$(command -v certbot || echo "/snap/bin/certbot")
 
 if [ ! -x "$CERTBOT_PATH" ]; then
